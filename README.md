@@ -1,2 +1,0 @@
-# Samiksha
-Happy Birthday Samiksha💫

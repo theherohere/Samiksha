@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>What's So Special About This Day?</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
       background: black;
-      color: white;
     }
 
     #intro, #main-content {
@@ -21,99 +22,33 @@
     }
 
     #intro {
-      background: black;
-      z-index: 9999;
+      z-index: 2;
       opacity: 1;
       transition: opacity 2s ease-out;
     }
 
-    video {
+    #intro video {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
     #main-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
+      z-index: 1;
       opacity: 0;
       pointer-events: none;
       transition: opacity 2s ease-in;
-      overflow: hidden;
     }
 
-    .stars {
-      position: absolute;
+    #main-content video {
       width: 100%;
       height: 100%;
-      background: transparent;
-      background-image: radial-gradient(white 1px, transparent 1px);
-      background-size: 20px 20px;
-      animation: twinkle 5s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes twinkle {
-      from { background-position: 0 0; }
-      to { background-position: 20px 20px; }
-    }
-
-    .title {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      font-size: 1.8em;
-      margin-top: 20px;
-      text-shadow: 0 0 10px white;
-    }
-
-    .moon {
-      position: absolute;
-      left: 20px;
-      top: 120px;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle at 30% 30%, #ddd, #888);
-      border-radius: 50%;
-      box-shadow: 0 0 20px #ccc;
-      animation: rotate 20s linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .controls {
-      position: absolute;
-      bottom: 30px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      z-index: 1;
-    }
-
-    .controls button {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      padding: 10px;
-      border-radius: 50%;
-      font-size: 1.2em;
-      width: 50px;
-      height: 50px;
-    }
-
-    audio {
-      display: none;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
+
   <!-- Intro Video -->
   <div id="intro">
     <video id="intro-video" autoplay muted playsinline>
@@ -122,37 +57,27 @@
     </video>
   </div>
 
-  <!-- Main Content -->
+  <!-- Background Video Page -->
   <div id="main-content">
-    <div class="stars"></div>
-    <h1 class="title">What's So Special About This Day?</h1>
-    <div class="moon"></div>
-    <div class="controls">
-      <button onclick="music.pause()">⏹️</button>
-      <button onclick="music.play()">▶️</button>
-      <button onclick="music.pause()">⏸️</button>
-    </div>
-    <audio id="music" loop>
-      <source src="your-music-file.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+    <video id="background-video" autoplay muted loop playsinline>
+      <source src="VID-20250719-WA0006.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   </div>
 
   <script>
-    const video = document.getElementById('intro-video');
+    const introVideo = document.getElementById('intro-video');
     const intro = document.getElementById('intro');
     const mainContent = document.getElementById('main-content');
-    const music = document.getElementById('music');
 
-    video.onended = () => {
+    introVideo.onended = () => {
       intro.style.opacity = '0';
       setTimeout(() => {
         intro.style.display = 'none';
         mainContent.style.opacity = '1';
         mainContent.style.pointerEvents = 'auto';
-        music.play();
-      }, 2000); // matches the transition time
+      }, 2000);
     };
   </script>
 </body>
-  </html>
+</html>

@@ -49,7 +49,7 @@
     </video>
   </div>
 
-  <!-- Moon Video (shows once after intro ends) -->
+  <!-- Moon Video -->
   <div id="moon" class="video-layer">
     <video id="moon-video" muted playsinline>
       <source src="Moon.mp4" type="video/mp4" />
@@ -57,7 +57,7 @@
     </video>
   </div>
 
-  <!-- Looping Background Video -->
+  <!-- Background Video (looping behind everything) -->
   <div id="background" class="video-layer">
     <video id="background-video" autoplay muted loop playsinline>
       <source src="VID-20250719-WA0006.mp4" type="video/mp4" />
@@ -74,7 +74,7 @@
 
     const background = document.getElementById('background');
 
-    // When the intro video ends
+    // After intro video ends
     introVideo.onended = () => {
       intro.style.opacity = '0';
       setTimeout(() => {
@@ -82,12 +82,12 @@
 
         // Show moon video
         moon.style.opacity = '1';
-        moon.style.pointerEvents = 'none'; // disable touch
+        moon.style.pointerEvents = 'none';
         moonVideo.play();
       }, 1500);
     };
 
-    // When moon video ends, freeze on last frame
+    // Freeze moon video after it ends
     moonVideo.onended = () => {
       moonVideo.pause();
       moonVideo.currentTime = moonVideo.duration;

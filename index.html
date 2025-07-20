@@ -11,54 +11,54 @@
       height: 100%;
       overflow: hidden;
       background: black;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
-    #intro, #main-content {
+    .video-layer {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-    }
-
-    #intro {
-      z-index: 2;
-      opacity: 1;
-      transition: opacity 2s ease-out;
-    }
-
-    #intro video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    #main-content {
       z-index: 1;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 2s ease-in;
+      transition: opacity 1.5s ease;
     }
 
-    #main-content video {
+    video {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
+    #intro { z-index: 3; opacity: 1; pointer-events: auto; }
+    #moon { z-index: 2; }
+    #background { z-index: 1; }
   </style>
 </head>
 <body>
 
   <!-- Intro Video -->
-  <div id="intro">
+  <div id="intro" class="video-layer">
     <video id="intro-video" autoplay muted playsinline>
       <source src="intro.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   </div>
 
-  <!-- Background Video Page -->
-  <div id="main-content">
+  <!-- Moon Video (shows once after intro ends) -->
+  <div id="moon" class="video-layer">
+    <video id="moon-video" muted playsinline>
+      <source src="moon.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Looping Background Video -->
+  <div id="background" class="video-layer">
     <video id="background-video" autoplay muted loop playsinline>
       <source src="VID-20250719-WA0006.mp4" type="video/mp4" />
       Your browser does not support the video tag.
@@ -66,17 +66,31 @@
   </div>
 
   <script>
-    const introVideo = document.getElementById('intro-video');
     const intro = document.getElementById('intro');
-    const mainContent = document.getElementById('main-content');
+    const introVideo = document.getElementById('intro-video');
 
+    const moon = document.getElementById('moon');
+    const moonVideo = document.getElementById('moon-video');
+
+    const background = document.getElementById('background');
+
+    // When the intro video ends
     introVideo.onended = () => {
       intro.style.opacity = '0';
       setTimeout(() => {
         intro.style.display = 'none';
-        mainContent.style.opacity = '1';
-        mainContent.style.pointerEvents = 'auto';
-      }, 2000);
+
+        // Show moon video
+        moon.style.opacity = '1';
+        moon.style.pointerEvents = 'none'; // disable touch
+        moonVideo.play();
+      }, 1500);
+    };
+
+    // When moon video ends, freeze on last frame
+    moonVideo.onended = () => {
+      moonVideo.pause();
+      moonVideo.currentTime = moonVideo.duration;
     };
   </script>
 </body>

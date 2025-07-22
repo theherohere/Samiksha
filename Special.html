@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Your Envelope</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #0a0a23, #1e1e3f);
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+    }.sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.moon {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 100px;
+  height: 100px;
+  background: #fff8dc;
+  border-radius: 50%;
+  box-shadow: 0 0 60px #fff8dc;
+  animation: glow 3s infinite ease-in-out;
+}
+
+.cloud {
+  position: absolute;
+  background: #ffffff44;
+  border-radius: 50%;
+  animation: floatClouds 60s linear infinite;
+}
+
+.cloud1 {
+  width: 200px;
+  height: 60px;
+  top: 20%;
+  left: -200px;
+  animation-delay: 0s;
+}
+.cloud2 {
+  width: 250px;
+  height: 70px;
+  top: 40%;
+  left: -250px;
+  animation-delay: 10s;
+}
+.cloud3 {
+  width: 180px;
+  height: 50px;
+  top: 60%;
+  left: -180px;
+  animation-delay: 20s;
+}
+
+@keyframes floatClouds {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(150vw); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 60px #fff8dc; }
+  50% { box-shadow: 0 0 90px #fff8dc; }
+}
+
+.envelope-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.envelope {
+  width: 100%;
+  height: 100%;
+  background: #f0e3d0;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  border-radius: 10px;
+}
+
+.envelope.opened {
+  transform: rotateX(-180deg);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 0;
+  left: 0;
+  background: #d2b48c;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 1s ease;
+}
+
+.envelope.opened::before {
+  transform: rotateX(-180deg);
+}
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.instruction {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  color: #bbb;
+  animation: floatText 2s infinite ease-in-out;
+}
+
+@keyframes floatText {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.card-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card {
+  background: #fff;
+  color: #333;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0004;
+  margin-bottom: 1rem;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  font-size: 1.2rem;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+  </style>
+</head>
+<body>
+  <div class="sky">
+    <div class="moon"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+  </div>  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope" id="envelope"></div>
+    <div class="message">
+      <h2>Swipe Up to Open</h2>
+      <p>And discover why you're truly special...</p>
+    </div>
+  </div>  <div class="instruction">
+    After reading a card, swipe in any direction to flick it away 🌙
+  </div>  <div class="card-container" id="cardContainer">
+    <div class="card">You have the gentlest smile that lights up hearts 💖</div>
+    <div class="card">Your love for the moon makes you celestial 🌕</div>
+    <div class="card">You sketch the world more beautifully than it is 🎨</div>
+    <!-- Add more cards here -->
+  </div>  <script>
+    function openEnvelope() {
+      document.getElementById('envelope').classList.add('opened');
+      setTimeout(() => {
+        document.querySelector('.envelope-container').style.display = 'none';
+        document.querySelector('.instruction').style.display = 'none';
+        document.getElementById('cardContainer').style.display = 'flex';
+      }, 2000);
+    }
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('touchstart', handleSwipe);
+      card.addEventListener('mousedown', handleSwipe);
+    });
+
+    function handleSwipe(e) {
+      const card = e.currentTarget;
+      card.style.transform = 'translateX(200px) rotate(10deg)';
+      card.style.opacity = '0';
+      setTimeout(() => card.remove(), 500);
+    }
+  </script></body>
+</html>

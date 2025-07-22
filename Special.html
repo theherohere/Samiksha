@@ -3,174 +3,172 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Why You're Special</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 0;
       background: linear-gradient(to bottom, #0a0a23, #1e1e3f);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Patrick Hand', cursive;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
-    }.sky {
-  position: absolute;
+    }.stars {
+  position: fixed;
   width: 100%;
   height: 100%;
-  background: url('https://i.imgur.com/F8A4N2v.png') repeat-x;
-  background-size: cover;
+  background: url('https://i.ibb.co/YbLCjtx/stars.gif') repeat;
   z-index: -2;
-  animation: moveClouds 100s linear infinite;
 }
 
 .moon {
-  position: absolute;
-  top: 10%;
-  right: 10%;
+  position: fixed;
+  top: 20px;
+  right: 30px;
   width: 100px;
   height: 100px;
-  background: radial-gradient(circle at 30% 30%, #fff, #ccc);
-  border-radius: 50%;
+  background: url('https://i.ibb.co/2gRyTjb/moon.png') no-repeat center/contain;
   z-index: -1;
 }
 
-@keyframes moveClouds {
-  0% { background-position-x: 0; }
-  100% { background-position-x: 10000px; }
+.cloud {
+  position: fixed;
+  top: 40%;
+  left: -200px;
+  width: 200px;
+  height: 100px;
+  background: url('https://i.ibb.co/F3V8vGf/cloud.png') no-repeat center/contain;
+  animation: floatCloud 60s linear infinite;
+  z-index: -1;
+}
+
+@keyframes floatCloud {
+  0% { left: -200px; }
+  100% { left: 100%; }
 }
 
 .envelope-container {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 140px;
-  background: #d2b48c;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  cursor: grab;
-  z-index: 10;
+  position: relative;
+  width: 300px;
+  height: 200px;
+  cursor: pointer;
 }
 
-.lid {
+.flap {
   position: absolute;
   width: 100%;
-  height: 70px;
-  background: #bca27d;
-  top: -70px;
-  border-radius: 10px 10px 0 0;
-  transform-origin: bottom center;
-  transition: transform 0.5s ease;
+  height: 50%;
+  top: 0;
+  background: #d2b48c;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 1s ease;
+  z-index: 2;
 }
 
-.open .lid {
-  transform: rotateX(-150deg);
+.flap.opened {
+  transform: rotateX(-180deg);
 }
 
-.cards {
-  position: absolute;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-  height: 350px;
-  perspective: 1000px;
+.cards-container {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .card {
-  width: 100%;
-  height: 100%;
-  background: white;
+  background: url('https://i.ibb.co/kBcF5J3/sketch-paper.jpg') center/cover no-repeat;
+  width: 280px;
+  height: 180px;
   border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-  position: absolute;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
+  align-items: center;
   text-align: center;
-  padding: 20px;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  font-size: 1.2rem;
+  padding: 10px;
+  position: absolute;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  z-index: 10;
 }
 
-.card:nth-child(1) { z-index: 10; }
-.card:nth-child(2) { z-index: 9; top: 5px; }
-.card:nth-child(3) { z-index: 8; top: 10px; }
-.card:nth-child(4) { z-index: 7; top: 15px; }
-.card:nth-child(5) { z-index: 6; top: 20px; }
-.card:nth-child(6) { z-index: 5; top: 25px; }
-.card:nth-child(7) { z-index: 4; top: 30px; }
-.card:nth-child(8) { z-index: 3; top: 35px; }
-.card:nth-child(9) { z-index: 2; top: 40px; }
-.card:nth-child(10) { z-index: 1; top: 45px; }
+.card.swiped {
+  transform: translate(200px, -200px) rotate(20deg);
+  opacity: 0;
+}
 
 .instruction {
-  position: absolute;
-  bottom: 30px;
+  position: fixed;
+  bottom: 20px;
   width: 100%;
   text-align: center;
-  color: #ccc;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: #bbb;
+  animation: floatText 2s infinite ease-in-out;
+}
+
+@keyframes floatText {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
   </style>
 </head>
 <body>
-  <div class="sky"></div>
-  <div class="moon"></div>  <div class="envelope-container" id="envelope">
-    <div class="lid"></div>
-    <div class="label">Swipe Up to Open</div>
-  </div>  <div class="cards" id="cards">
-    <div class="card">You light up the darkest skies ✨</div>
-    <div class="card">Your kindness is endless 💖</div>
-    <div class="card">Your art tells stories louder than words 🖌️</div>
-    <div class="card">You help others without expecting anything 🌟</div>
-    <div class="card">You're stronger than you know 💪</div>
-    <div class="card">Your silence speaks volumes 🎧</div>
-    <div class="card">You love like the moon—calm, quiet, complete 🌕</div>
-    <div class="card">You bring peace in chaos ☁️</div>
-    <div class="card">You're unforgettable 🌙</div>
-    <div class="card">You're loved more than you realise 💫</div>
-  </div>  <div class="instruction">Swipe up the envelope to open it, then flick each card away in any direction ✨</div>  <script>
-    const envelope = document.getElementById('envelope');
-    const cards = document.getElementById('cards');
-
+  <div class="stars"></div>
+  <div class="moon"></div>
+  <div class="cloud"></div>  <div class="envelope-container" id="envelopeContainer">
+    <div class="flap" id="flap"></div>
+  </div>  <div class="cards-container" id="cardsContainer">
+    <div class="card">You're strong even when quiet.</div>
+    <div class="card">Your sketches speak louder than words.</div>
+    <div class="card">You bring calm like the clouds.</div>
+    <div class="card">Helping others is your superpower.</div>
+    <div class="card">You’re the moonlight in darkness.</div>
+    <div class="card">Kind hearts like yours are rare.</div>
+    <div class="card">You notice the unnoticed.</div>
+    <div class="card">You're a gentle inspiration.</div>
+    <div class="card">Even silence shines when it's you.</div>
+    <div class="card">You’re loved more than you know.</div>
+  </div>  <div class="instruction">
+    Swipe up to open ✉️<br />
+    Then swipe cards away in any direction ☁️
+  </div>  <script>
+    let flap = document.getElementById('flap');
     let startY = 0;
-    envelope.addEventListener('touchstart', e => {
+
+    document.getElementById('envelopeContainer').addEventListener('touchstart', e => {
       startY = e.touches[0].clientY;
     });
 
-    envelope.addEventListener('touchend', e => {
+    document.getElementById('envelopeContainer').addEventListener('touchend', e => {
       let endY = e.changedTouches[0].clientY;
-      if (startY - endY > 50) {
-        envelope.classList.add('open');
-        cards.style.display = 'block';
+      if (startY - endY > 30) {
+        flap.classList.add('opened');
+        document.getElementById('cardsContainer').style.display = 'flex';
       }
     });
 
-    let cardIndex = 0;
-    cards.addEventListener('touchstart', e => {
-      if (cardIndex >= cards.children.length) return;
-      const card = cards.children[cardIndex];
-      let startX = e.touches[0].clientX;
-      let startY = e.touches[0].clientY;
-
-      cards.addEventListener('touchend', function handleFlick(ev) {
-        let endX = ev.changedTouches[0].clientX;
-        let endY = ev.changedTouches[0].clientY;
-        let dx = endX - startX;
-        let dy = endY - startY;
-
-        if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
-          card.style.transform = `translate(${dx * 3}px, ${dy * 3}px) rotate(${dx}deg)`;
-          card.style.opacity = 0;
-          cardIndex++;
-          cards.removeEventListener('touchend', handleFlick);
+    // Flick to dismiss
+    const cards = document.querySelectorAll('.card');
+    let currentIndex = 0;
+    let startX = 0;
+    cards.forEach(card => {
+      card.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      });
+      card.addEventListener('touchend', e => {
+        let endX = e.changedTouches[0].clientX;
+        if (Math.abs(endX - startX) > 30) {
+          card.classList.add('swiped');
+          setTimeout(() => card.style.display = 'none', 600);
         }
       });
     });

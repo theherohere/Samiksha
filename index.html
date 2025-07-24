@@ -93,5 +93,25 @@
       moonVideo.currentTime = moonVideo.duration;
     };
   </script>
+  <style>
+  .fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+</style>
+<script>
+  function goToSpecialPage() {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+      window.location.href = "why-youre-special.html"; // change to your page's filename
+    }, 1000);
+  }
+
+  // Trigger after some interaction or delay:
+  // Example: auto transition after 4 seconds
+  window.onload = () => {
+    setTimeout(goToSpecialPage, 4000);
+  };
+</script>
 </body>
 </html>

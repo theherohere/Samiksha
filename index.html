@@ -2,59 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>What's So Special About This Day?</title>
   <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: black;
-    touch-action: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: black;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
 
-  .video-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: black;
-    z-index: 1;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1.5s ease;
-  }
+    .video-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: black;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
 
-  .video-layer video {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    background: black;
-  }
+    .video-layer video {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      background: black;
+    }
 
-  #intro {
-    z-index: 3;
-    opacity: 1;
-    pointer-events: auto;
-  }
+    #intro {
+      z-index: 3;
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-  #moon {
-    z-index: 2;
-  }
+    #moon {
+      z-index: 2;
+    }
 
-  #background {
-    z-index: 1;
-  }
+    #background {
+      z-index: 1;
+    }
+
+    /* 🌟 Star Sparkle */
+    .sparkle {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: sparkle-fade 0.8s ease-out forwards;
+      transform: translate(-50%, -50%);
+    }
+
+    .sparkle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @keyframes sparkle-fade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+      }
+    }
   </style>
 </head>
 <body>
@@ -75,7 +104,7 @@
     </video>
   </div>
 
-  <!-- Background Video (looping behind everything) -->
+  <!-- Background Video -->
   <div id="background" class="video-layer">
     <video id="background-video" autoplay muted loop playsinline>
       <source src="VID-20250719-WA0006.mp4" type="video/mp4" />
@@ -86,30 +115,48 @@
   <script>
     const intro = document.getElementById('intro');
     const introVideo = document.getElementById('intro-video');
-
     const moon = document.getElementById('moon');
     const moonVideo = document.getElementById('moon-video');
 
-    const background = document.getElementById('background');
-
-    // After intro video ends
+    // ✨ After intro ends
     introVideo.onended = () => {
       intro.style.opacity = '0';
       setTimeout(() => {
         intro.style.display = 'none';
-
-        // Show moon video
         moon.style.opacity = '1';
         moon.style.pointerEvents = 'none';
         moonVideo.play();
       }, 1500);
     };
 
-    // Freeze moon video after it ends
+    // ✨ Freeze moon video
     moonVideo.onended = () => {
       moonVideo.pause();
       moonVideo.currentTime = moonVideo.duration;
     };
+
+    // 🌟 Touch sparkle with image
+    document.addEventListener('touchstart', sparkleEffect);
+    document.addEventListener('touchmove', sparkleEffect);
+
+    function sparkleEffect(e) {
+      for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+
+        const star = document.createElement('img');
+        star.src = 'star.png'; // ⭐ Your star image here
+        sparkle.appendChild(star);
+
+        sparkle.style.left = `${touch.clientX}px`;
+        sparkle.style.top = `${touch.clientY}px`;
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 800);
+      }
+    }
   </script>
+
 </body>
 </html>

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,255 +14,84 @@
       touch-action: none;
       -webkit-user-select: none;
       user-select: none;
-      font-family: 'Segoe UI', sans-serif;
-    }.video-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1.5s ease;
-}
+    }
 
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .video-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
 
-#intro { z-index: 3; opacity: 1; pointer-events: auto; }
-#moon { z-index: 2; }
-#background { z-index: 1; }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-#card-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  opacity: 0;
-  transition: opacity 1s ease;
-  z-index: 4;
-  display: none;
-}
-
-.envelope-container {
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 240px;
-  height: auto;
-  cursor: pointer;
-}
-
-.envelope-image {
-  width: 100%;
-  height: auto;
-  transition: transform 0.6s ease;
-}
-
-.envelope-container.opened .envelope-image {
-  transform: scale(0.8) rotateX(180deg);
-  opacity: 0;
-}
-
-.cards {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 200px;
-  perspective: 1000px;
-  display: none;
-}
-
-.card {
-  background: url('file-Kt33GKF9nTiZeFBpUQx7D4') center/cover no-repeat;
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #444;
-  padding: 20px;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  user-select: none;
-  z-index: 10;
-}
-
-.card.swiped {
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  opacity: 0;
-}
-
-.instruction {
-  position: absolute;
-  bottom: 5%;
-  width: 100%;
-  text-align: center;
-  color: #eee;
-  font-size: 0.9rem;
-  animation: floatText 2s infinite ease-in-out;
-}
-
-@keyframes floatText {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.confetti {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: gold;
-  border-radius: 50%;
-  animation: sparkle 1s linear forwards;
-}
-
-@keyframes sparkle {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-100px) scale(0.5);
-  }
-}
-
+    #intro { z-index: 3; opacity: 1; pointer-events: auto; }
+    #moon { z-index: 2; }
+    #background { z-index: 1; }
   </style>
 </head>
 <body>
+
   <!-- Intro Video -->
   <div id="intro" class="video-layer">
     <video id="intro-video" autoplay muted playsinline>
       <source src="Intro2.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
     </video>
-  </div>  <!-- Moon Video -->  <div id="moon" class="video-layer">
+  </div>
+
+  <!-- Moon Video -->
+  <div id="moon" class="video-layer">
     <video id="moon-video" muted playsinline>
       <source src="Moon.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
     </video>
-  </div>  <!-- Background Video -->  <div id="background" class="video-layer">
+  </div>
+
+  <!-- Background Video (looping behind everything) -->
+  <div id="background" class="video-layer">
     <video id="background-video" autoplay muted loop playsinline>
       <source src="VID-20250719-WA0006.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
     </video>
-  </div>  <!-- Envelope + Cards Section -->  <div id="card-section">
-    <audio autoplay loop>
-      <source src="suzume.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="openSound">
-      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3dc11701d3.mp3?filename=envelope-open-124984.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="swipeSound">
-      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c4cddfdb8.mp3?filename=swipe-card-124997.mp3" type="audio/mpeg">
-    </audio><div class="envelope-container" id="envelopeContainer">
-  <img src="file-TMW1mVQzf2DH6KTkWQ68mR" class="envelope-image" alt="Envelope">
-</div>
+  </div>
 
-<div class="cards" id="cards">
-  <div class="card">You're strong even when quiet.</div>
-  <div class="card">Your sketches speak louder than words.</div>
-  <div class="card">You bring calm like the clouds.</div>
-  <div class="card">Helping others is your superpower.</div>
-  <div class="card">You’re the moonlight in darkness.</div>
-  <div class="card">Kind hearts like yours are rare.</div>
-  <div class="card">You notice the unnoticed.</div>
-  <div class="card">You're a gentle inspiration.</div>
-  <div class="card">Even silence shines when it's you.</div>
-  <div class="card">You’re loved more than you know.</div>
-</div>
-
-<div class="instruction">
-  Swipe up to open 💌 &nbsp;&nbsp;|&nbsp;&nbsp; Flick each card away in any direction ✨
-</div>
-
-  </div>  <script>
+  <script>
     const intro = document.getElementById('intro');
     const introVideo = document.getElementById('intro-video');
+
     const moon = document.getElementById('moon');
     const moonVideo = document.getElementById('moon-video');
-    const cardSection = document.getElementById('card-section');
-    const envelope = document.getElementById('envelopeContainer');
-    const cards = document.getElementById('cards');
-    const cardStack = document.querySelectorAll('.card');
-    const openSound = document.getElementById('openSound');
-    const swipeSound = document.getElementById('swipeSound');
-    let startY = 0;
 
+    const background = document.getElementById('background');
+
+    // After intro video ends
     introVideo.onended = () => {
       intro.style.opacity = '0';
       setTimeout(() => {
         intro.style.display = 'none';
+
+        // Show moon video
         moon.style.opacity = '1';
         moon.style.pointerEvents = 'none';
         moonVideo.play();
       }, 1500);
     };
 
+    // Freeze moon video after it ends
     moonVideo.onended = () => {
-      moon.style.opacity = '0';
-      setTimeout(() => {
-        moon.style.display = 'none';
-        cardSection.style.display = 'block';
-        setTimeout(() => { cardSection.style.opacity = '1'; }, 50);
-      }, 1500);
+      moonVideo.pause();
+      moonVideo.currentTime = moonVideo.duration;
     };
-
-    envelope.addEventListener('touchstart', e => {
-      startY = e.touches[0].clientY;
-    });
-    envelope.addEventListener('touchend', e => {
-      const endY = e.changedTouches[0].clientY;
-      if (startY - endY > 30) {
-        envelope.classList.add('opened');
-        cards.style.display = 'block';
-        openSound.play();
-      }
-    });
-
-    function createSparkle(x, y) {
-      for (let i = 0; i < 15; i++) {
-        const spark = document.createElement('div');
-        spark.className = 'confetti';
-        spark.style.left = `${x + Math.random() * 60 - 30}px`;
-        spark.style.top = `${y + Math.random() * 30 - 15}px`;
-        spark.style.backgroundColor = ['#FFD700', '#FF69B4', '#87CEFA'][Math.floor(Math.random()*3)];
-        document.body.appendChild(spark);
-        setTimeout(() => spark.remove(), 1000);
-      }
-    }
-
-    cardStack.forEach((card) => {
-      let startX = 0, startY = 0;
-      card.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      });
-      card.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        const dx = endX - startX;
-        const dy = endY - startY;
-        if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
-          card.style.transform = `translate(${dx * 3}px, ${dy * 3}px) rotate(${dx}deg)`;
-          card.classList.add('swiped');
-          swipeSound.play();
-          createSparkle(endX, endY);
-          setTimeout(() => { card.remove(); }, 600);
-        }
-      });
-    });
-  </script></body>
+  </script>
+</body>
 </html>

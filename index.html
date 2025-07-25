@@ -6,85 +6,67 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>What's So Special About This Day?</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      background: black;
-      touch-action: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: black;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
-    .video-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: black;
-      z-index: 1;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.5s ease;
-    }
+  .video-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease;
+  }
 
-    .video-layer video {
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      background: black;
-    }
+  .video-layer video {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: black;
+  }
 
-    #intro {
-      z-index: 3;
+  #intro { z-index: 3; opacity: 1; pointer-events: auto; }
+  #moon { z-index: 2; }
+  #background { z-index: 1; }
+
+  /* ✨ Sparkle */
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+    animation: sparkle-fade 1s ease-out forwards;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes sparkle-fade {
+    0% {
       opacity: 1;
-      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(0.8);
     }
-
-    #moon {
-      z-index: 2;
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2);
     }
-
-    #background {
-      z-index: 1;
-    }
-
-    /* 🌟 Sparkle Style */
-    .sparkle {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      pointer-events: none;
-      z-index: 9999;
-      animation: sparkle-fade 0.8s ease-out forwards;
-      transform: translate(-50%, -50%);
-    }
-
-    .sparkle img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    @keyframes sparkle-fade {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 

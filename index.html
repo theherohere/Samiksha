@@ -94,51 +94,67 @@
     </video>
   </div>
 
-  <script>
-    const intro = document.getElementById('intro');
-    const introVideo = document.getElementById('intro-video');
-    const moon = document.getElementById('moon');
-    const moonVideo = document.getElementById('moon-video');
+<script>
+  const intro = document.getElementById('intro');
+  const introVideo = document.getElementById('intro-video');
+  const moon = document.getElementById('moon');
+  const moonVideo = document.getElementById('moon-video');
 
-    // ⭐ Fade out intro and show moon video
-    introVideo.onended = () => {
-      intro.style.opacity = '0';
-      setTimeout(() => {
-        intro.style.display = 'none';
-        moon.style.opacity = '1';
-        moon.style.pointerEvents = 'none';
-        moonVideo.play();
-      }, 1500);
-    };
+  introVideo.onended = () => {
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.style.display = 'none';
+      moon.style.opacity = '1';
+      moon.style.pointerEvents = 'none';
+      moonVideo.play();
+    }, 1500);
+  };
 
-    // ⭐ Freeze moon video at end
-    moonVideo.onended = () => {
-      moonVideo.pause();
-      moonVideo.currentTime = moonVideo.duration;
-    };
+  moonVideo.onended = () => {
+    moonVideo.pause();
+    moonVideo.currentTime = moonVideo.duration;
+  };
 
-    // 🌟 Sparkle trail on touch
-    document.addEventListener('touchstart', showSparkles);
-    document.addEventListener('touchmove', showSparkles);
+  // ✨ Touch sparkle effect
+  document.addEventListener('touchstart', sparkleBurst);
+  document.addEventListener('touchmove', sparkleBurst);
 
-    function showSparkles(e) {
-      for (let i = 0; i < e.touches.length; i++) {
-        const touch = e.touches[i];
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
+  function sparkleBurst(e) {
+    for (let i = 0; i < e.touches.length; i++) {
+      const touch = e.touches[i];
+      createSparkle(touch.clientX, touch.clientY, 48); // Large center
 
-        const img = document.createElement('img');
-        img.src = 'star.png'; // ⭐ Must be in the same folder
-        sparkle.appendChild(img);
-
-        sparkle.style.left = `${touch.clientX}px`;
-        sparkle.style.top = `${touch.clientY}px`;
-
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 800);
+      // Add 3 smaller ones nearby
+      for (let j = 0; j < 3; j++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = Math.random() * 30 + 10;
+        const x = touch.clientX + Math.cos(angle) * radius;
+        const y = touch.clientY + Math.sin(angle) * radius;
+        createSparkle(x, y, 16 + Math.random() * 8);
       }
     }
-  </script>
+  }
+
+  function createSparkle(x, y, size) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = `${x}px`;
+    sparkle.style.top = `${y}px`;
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+
+    const img = document.createElement('img');
+    img.src = 'star.png'; // 🟡 Use your sparkle image here
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+
+    sparkle.appendChild(img);
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 1000);
+  }
+</script>
 
 </body>
 </html>
